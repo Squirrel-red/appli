@@ -5,6 +5,7 @@
     session_start();
 
 //-- les fonctions PHP sont dans sa documentation : https://www.php.net/manual/fr/intro.session.php
+//-- les filtres pour les nombeux cas de validation de données : https://www.php.net/manual/fr/filter.filters.php
     
 //-- on utilise les superglobales PHP: 
 //-- $_GET contient tous les paramères ayant été transmis au serveur par l'intermédiaire de l'url de la requète
@@ -25,7 +26,7 @@
                     
                     // Filtres pour la sécurité
             
-                    if($name && $price && $qtt && $description){
+                    if($name && $price && $qtt){
             
                         $product = [
                             "name"=> $name,
@@ -35,16 +36,21 @@
                         ];
                         // si on veut éviter les doublons cette fonction existe: $product = array_unique($product);
                         $_SESSION['products'][]= $product;
+                        $_SESSION['message'] = "Produit $name ajouté";
+                    }
+                    else {  
+                        $_SESSION['message'] = "erreur";
                     }
                 }
-                $_SESSION['messages'][] = "Produit $name ajouté";
+                else {  
+                    $_SESSION['message'] = "erreur";
+                }
                 header("Location:index.php"); //a mettre en dernier, renvoie à l'index une fois le formulaire envoyé, correct ou non
                 exit;
                 break;
 
                 
-// -- fonctions pour modifier le panier, en lien avec les <a href> dans recap, sur les icones ------------------------
-
+//-- fonctions pour modifier le panier, en lien avec les <a href> dans recap, sur les icones
 
 
             case 'removeOne': //action pour retirer une quantité 
@@ -61,7 +67,7 @@
 
             case 'add' : //action pour ajouter une quantité
                 $_SESSION['products'][$_GET['id']]['qtt'] += 1;
-                //ensuite mettre à jour le total
+               //ensuite mettre à jour le total
                 $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['qtt'] * $_SESSION['products'][$_GET['id']]['price'] ;
               
                 $name = $_SESSION['products'][$_GET['id']]["name"]; 
@@ -82,7 +88,7 @@
                 unset($_SESSION['products']);
 
 
-                $_SESSION['messages'][] = "Panier supprimé";
+                $_SESSION['message'] = "Panier supprimé";
                 break;
 
             default : 
