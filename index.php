@@ -1,18 +1,58 @@
 <?php
     session_start();
 
+// pour afficher la quantité totale des produits sur le button "Panier"
     $qttTotal = 0;
-
     if (isset($_SESSION['products']) && !empty($_SESSION['products'])){
 
-        foreach($_SESSION['products'] as $index => $qtt){ // boucle pour afficher la quantité totale des produits
+        foreach($_SESSION['products'] as $index => $qtt){ // boucle pour afficher la quantité totale des produits sur le button "Panier"
         $qttTotal+= $qtt['qtt'];
         }        
 
     }
 
+// pour afficher les messages venus suite l'exécution des fonctions du fichier  traitement.php
+
+// pour les cas 'removeOne', 'add' et 'delete'
+    if (!isset($_SESSION["messages"]) || empty($_SESSION["messages"])) {
+    // s'il n'y a pas de messages --> on n'affiche pas les messages
+    } else{
+
+        echo $_SESSION["messages"][0];
+        unset($_SESSION["messages"][0]);
+    } 
+
+// pour les cas "addProduct" et 'deleteEverything'
+    if (!isset($_SESSION["message"]) || empty($_SESSION["message"])) {
+        // s'il n'y a pas de messages --> on n'affiche pas les messages
+    } else{
+            echo $_SESSION["message"];
+    
+            unset($_SESSION["message"]);
+    } 
+
+//}
+
+//function showBasket(){
+//    if(!isset($_SESSION['products']) || empty($_SESSION['products'])){
+    // s'il n'y a rien, la page affiche seulement le formulaire ; sans cette condition la page affiche une erreur
+//} else {
+
+//    $totalQtt=0;
+
+//    foreach($_SESSION['products'] as $product){
+//        $totalQtt+=$product['qtt'];
+//    }
+//    echo "<div id='card'>",
+//            "<p>Nombre total d'articles : ".$totalQtt." </p>",
+//        "</div>";
+//    }
+
+//}
+
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,6 +104,7 @@
             <p>
                 <input type="submit" name="submit" value="Ajouter le produit" class="btn btn-primary btn-lg">
             </p>
+
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

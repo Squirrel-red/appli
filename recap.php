@@ -4,6 +4,18 @@
     // var_dump($_SESSION);
     // session_destroy();
     // ob_start(); //demarre la temporisation de sortie
+
+
+// pour afficher la quantité totale des produits sur le button "Panier"
+$qttTotal = 0;
+if (isset($_SESSION['products']) && !empty($_SESSION['products'])){
+
+    foreach($_SESSION['products'] as $index => $qtt){ // boucle pour afficher la quantité totale des produits sur le button "Panier"
+    $qttTotal+= $qtt['qtt'];
+    }        
+
+}  
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,8 +34,8 @@
       <a  href ="recap.php" class="btn btn-outline-primary position-relative">
   Panier
   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-    
-    0
+    <?= $qttTotal ?>
+    <?php //echo $qttTotal ?>
     <span class="visually-hidden"></span>
   </span>
 </a>

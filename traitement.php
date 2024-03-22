@@ -36,14 +36,14 @@
                         ];
                         // si on veut éviter les doublons cette fonction existe: $product = array_unique($product);
                         $_SESSION['products'][]= $product;
-                        $_SESSION['message'] = "Produit $name ajouté";
+                        $_SESSION['message'] = "Produit $name est ajouté";
                     }
                     else {  
-                        $_SESSION['message'] = "erreur";
+                        $_SESSION['message'] = "Il faut remplir tous les champs!";
                     }
                 }
                 else {  
-                    $_SESSION['message'] = "erreur";
+                    $_SESSION['message'] = "Erreur lor l'ajout du produit";
                 }
                 header("Location:index.php"); //a mettre en dernier, renvoie à l'index une fois le formulaire envoyé, correct ou non
                 exit;
@@ -61,7 +61,7 @@
                     $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['qtt'] * $_SESSION['products'][$_GET['id']]['price'] ;
 
                     $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                    $_SESSION['messages'][] = "Quantité de $name diminuée";
+                    $_SESSION['messages'][] = "Quantité de $name est diminuée";
                 }
                 break;
 
@@ -71,7 +71,7 @@
                 $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['qtt'] * $_SESSION['products'][$_GET['id']]['price'] ;
               
                 $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                $_SESSION['messages'][] = "Quantité de $name augmentée";
+                $_SESSION['messages'][] = "Quantité de $name est augmentée";
 
                 break;
 
@@ -81,14 +81,14 @@
                 unset($_SESSION['products'][$_GET['id']]);
 
                 $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                $_SESSION['messages'][] = "Produit $name supprimé";
+                $_SESSION['messages'][] = "Produit $name est supprimé";
                 break;
 
             case 'deleteEverything' : // action pour supprimer tout son panier
                 unset($_SESSION['products']);
 
 
-                $_SESSION['message'] = "Panier supprimé";
+                $_SESSION['message'] = "Panier est supprimé";
                 break;
 
             default : 
