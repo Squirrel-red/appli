@@ -12,7 +12,7 @@
     }
 
 // pour afficher les messages venus suite l'exécution des fonctions du fichier  traitement.php
-
+// prévoir le bouton pour les messages et déplacer l'affichage à la fin de la page
 // pour les cas 'removeOne', 'add' et 'delete'
     if (!isset($_SESSION["messages"]) || empty($_SESSION["messages"])) {
     // s'il n'y a pas de messages --> on n'affiche pas les messages
