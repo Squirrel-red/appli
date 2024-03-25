@@ -34,16 +34,16 @@
                             "qtt" => $qtt,
                             "total" => $price*$qtt,
                         ];
-                        // si on veut éviter les doublons cette fonction existe: $product = array_unique($product);
+                        // si la saisie est correct
                         $_SESSION['products'][]= $product;
-                        $_SESSION['message'] = "Produit $name est ajouté";
+                        $_SESSION['message'] = "<div  class='alert alert-success''>$name est mis dans le panier</div>";
                     }
                     else {  
-                        $_SESSION['message'] = "Il faut remplir tous les champs!";
+                        $_SESSION['message'] = "<div  class='alert alert-danger'>Il faut remplir tous les champs</div>";
                     }
                 }
                 else {  
-                    $_SESSION['message'] = "Erreur lor l'ajout du produit";
+                    $_SESSION['message'] = "<div  class='alert alert-danger'>erreur</div>";
                 }
                 header("Location:index.php"); //a mettre en dernier, renvoie à l'index une fois le formulaire envoyé, correct ou non
                 exit;
@@ -61,7 +61,7 @@
                     $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['qtt'] * $_SESSION['products'][$_GET['id']]['price'] ;
 
                     $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                    $_SESSION['messages'][] = "Quantité de $name est diminuée";
+                    $_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est diminuée</div>";
                 }
                 break;
 
@@ -71,24 +71,24 @@
                 $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['qtt'] * $_SESSION['products'][$_GET['id']]['price'] ;
               
                 $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                $_SESSION['messages'][] = "Quantité de $name est augmentée";
+                $_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est augmentée</div>";
 
                 break;
 
 // function unset() supprime une variable dans un tableau
 
             case 'delete': //action pour supprimer une catégorie entière de produit
+                $name = $_SESSION['products'][$_GET['id']]["name"]; 
                 unset($_SESSION['products'][$_GET['id']]);
 
-                $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                $_SESSION['messages'][] = "Produit $name est supprimé";
+                $_SESSION['message'] = "<div  class='alert alert-danger'>Produit $name est supprimé</div>";
+                // pour les cas "addProduct" et 'deleteEverything'
                 break;
 
             case 'deleteEverything' : // action pour supprimer tout son panier
                 unset($_SESSION['products']);
 
-
-                $_SESSION['message'] = "Panier est supprimé";
+                $_SESSION['message'] = "<div  class='alert alert-danger'>Panier est supprimé</div>";
                 break;
 
             default : 

@@ -66,21 +66,21 @@ if (isset($_SESSION['products']) && !empty($_SESSION['products'])){
             echo "<tr>",
                     "<td>".$index."</td>",
                     "<td>".$product['name']."</td>",
-                    "<td>".number_format($product['price'], 2, ",", "&nbssp;")."&nbsp;€</td>", //la fonction number_format permet de modifier l'affichage d'une valeur numérique en présisant plusieurs paramétres
+                    "<td>".number_format($product['price'], 2, ",", "&nbsp;")."&nbsp;€</td>", //la fonction number_format permet de modifier l'affichage d'une valeur numérique en présisant plusieurs paramétres
                     "<td>", //retirer ou ajouter une quantité
-                        "<a href='traitement.php?action=removeOne&id=$index'><i class='fa-solid fa-minus'></i></a>",
+                        "<a href='traitement.php?action=add&id=$index'> + </a>",
                             $product['qtt'],
-                        "<a href='traitement.php?action=add&id=$index'><i class='fa-solid fa-plus'></a></i>",
+                        "<a href='traitement.php?action=removeOne&id=$index'> - </i>",
+                        "<a href='traitement.php?action=delete&id=$index'> x</i>",
                     "</td>",
-                    "<td>".number_format($product['total'], 2, ",", "&nbssp;")."&nbsp;€ </td>",
+                    "<td>".number_format($product['total'], 2, ",", "&nbsp;")."&nbsp;€ </td>",
                  "</tr>";
             $totalGeneral+= $product['total'];
         }
         echo     "<tr>",
                     "<td colspan=4>Total général : </td>",
-                    "<td> <strong>".number_format($totalGeneral, 2, ",", "&nbssp;")."&nbsp;€</strong></td>",
+                    "<td> <strong>".number_format($totalGeneral, 2, ",", "&nbsp;")."&nbsp;€</strong></td>",
                  "</tr>",
-                
                  "</tbody>",
              "</table>";
     }
@@ -88,7 +88,13 @@ if (isset($_SESSION['products']) && !empty($_SESSION['products'])){
     echo '<a href="traitement.php?action=deleteEverything" class="btn btn-primary">Supprimer le panier</a>';
 
 
-
+    if (!isset($_SESSION["message"]) || empty($_SESSION["message"])){
+      // s'il n'y a pas de messages --> on n'affiche pas les messages
+  } else{
+          echo $_SESSION["message"];
+  
+          unset($_SESSION["message"]);
+  } 
   ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
