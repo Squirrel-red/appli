@@ -1,5 +1,7 @@
 <?php
+// On demarre la session:
 session_start();
+// On démarre la temporisation de sortie: 
 ob_start();
 
 ?>

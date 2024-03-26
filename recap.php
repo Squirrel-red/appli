@@ -68,10 +68,10 @@ if (isset($_SESSION['products']) && !empty($_SESSION['products'])){
                     "<td>".$product['name']."</td>",
                     "<td>".number_format($product['price'], 2, ",", "&nbsp;")."&nbsp;€</td>", //la fonction number_format permet de modifier l'affichage d'une valeur numérique en présisant plusieurs paramétres
                     "<td>", //retirer ou ajouter une quantité
-                        "<a href='traitement.php?action=add&id=$index'> + </a>",
+                        "<a href='traitement.php?action=add&id=$index'>  +  </a>",
                             $product['qtt'],
-                        "<a href='traitement.php?action=removeOne&id=$index'> - </i>",
-                        "<a href='traitement.php?action=delete&id=$index'> x</i>",
+                        "<a href='traitement.php?action=removeOne&id=$index'> -  </i>",
+                        "<a href='traitement.php?action=delete&id=$index'>  x  </i>",
                     "</td>",
                     "<td>".number_format($product['total'], 2, ",", "&nbsp;")."&nbsp;€ </td>",
                  "</tr>";
@@ -101,3 +101,14 @@ if (isset($_SESSION['products']) && !empty($_SESSION['products'])){
 
 </body>
 </html>
+
+<?php
+// Adaptation du ce fichier pour inclure le fichier template.php
+
+  // Recupere le contenu et le stocke dans la variable $content
+//$content = ob_get_clean();
+
+  //Recupere le code du fichier 
+//	require_once "template.php";
+	
+?>

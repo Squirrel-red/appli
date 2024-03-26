@@ -82,4 +82,12 @@ if (!isset($_SESSION["message"]) || empty($_SESSION["message"])){
         unset($_SESSION["message"]);
 } 
 
+// Adaptation du ce fichier pour inclure le fichier template.php
 
+  // Recupere le contenu et le stocke dans la variable $content
+$content = ob_get_clean();
+
+  //Recupere le code du fichier 
+	require_once "template.php";
+	
+?>
