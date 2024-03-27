@@ -23,16 +23,31 @@
                     $name=  filter_input(INPUT_POST, "name", FILTER_SANITIZE_FULL_SPECIAL_CHARS); //nouveau filtre
                     $price= filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     $qtt= filter_input(INPUT_POST, "qtt", FILTER_VALIDATE_INT);
-                    
+                    $description=  filter_input(INPUT_POST, "description", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                
+                    if (isset($_FILES['file'])) {
+                        $tmpName = $_FILES['file']['tmp_image'];
+                        $name = $_FILES['file']['image'];
+                        $destination = __DIR__ . '/upload/' . $image;
+       
+                   if (move_uploaded_file($tmpImage, $destination)) {
+                       $file = 'upload/' . $image; 
+                   } else {
+                       echo "Échec du téléchargement.";
+                       exit; 
+                   }
+               }   
                     // Filtres pour la sécurité
             
-                    if($name && $price && $qtt){
+                    if($name && $price && $qtt && $description && isset($file)){
             
                         $product = [
+                            "file" => $file,
                             "name"=> $name,
                             "price" => $price,
                             "qtt" => $qtt,
                             "total" => $price*$qtt,
+                            "description" => $description,
                         ];
                         // si la saisie est correct
                         $_SESSION['products'][]= $product;
@@ -63,6 +78,10 @@
                     $name = $_SESSION['products'][$_GET['id']]["name"]; 
                     $_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est diminuée</div>";
                 }
+               else {
+                   unset($_SESSION['products'][$_GET['id']]);
+                   $_SESSION['message']= "<div  class='alert alert-danger'Un produit vient d'être supprimer totalement du récapitulatif</div>";
+               }
                 break;
 
             case 'add' : //action pour ajouter une quantité

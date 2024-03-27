@@ -12,11 +12,45 @@
 
     }
 
+    
+			if(isset($_FILES['file'])){
+				$tmpImage = $_FILES['file']['tmp_image'];
+				$image = $_FILES['file']['image'];
+				$size = $_FILES['file']['size'];
+				$error = $_FILES['file']['error'];
+				$destinationPath = "upload/";
+				
+				$tabExtension = explode('.', $image);
+				$extension = strtolower(end($tabExtension));
+
+				$extensions = ['jpg', 'png', 'jpeg', 'gif'];
+				$maxSize = 400000;
+
+				if(in_array($tabExtension, $extensions) && $size <= $maxSize && $error == 0){
+					   $uniqueImage = uniqid('', true);
+					   $file = $uniqueImage.".".$extension;
+
+					
+	   
+						move_uploaded_file($tmpImage, $destinationPath . $Image);
+				}
+				else{
+				    echo "Mauvaise extension ou taille trop grande";
+				}
+
+
+			}
+
 ?>
 
     <h1 class ="text-primary">Ajouter un produit</h1>
     <form action="traitement.php?action=addProduct" method="post"> 
         <div class="mb-3">
+
+            <label for="file">Fichier:</label>
+				    <input type="file" name="file">
+				    <button type="submit" name="Enregistrer">Enregistrer</button>
+         
             <p>
                 <label>
                     Nom du produit : 
@@ -27,15 +61,21 @@
             <p>
                 <label>
                     Prix du produit en € : 
-                    <input type="number" step="any" name="price" class="form-control" >
+                    <input type="number" min ="0" step="any" name="price" class="form-control" >
                 </label>
             </p>
             <p>
                 <label>
                     Quantité désirée : 
-                    <input type="number" name="qtt" value="1" class="form-control">
+                    <input type="number" min="1" name="qtt"  class="form-control">
                 </label>
             </p>
+            <p>
+				<label> Description du produit :
+					<br>
+					<textarea name="description"></textarea>
+				</label>
+			</p>
             <p>
                 <input type="submit" name="submit" value="Ajouter le produit" class="btn btn-primary btn-lg">
             </p>

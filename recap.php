@@ -28,10 +28,13 @@ if (isset($_SESSION['products']) && !empty($_SESSION['products'])){
                 "<thead>",
                     "<tr>",
                         "<th>#</th>",
+                        "<th>Image</th>",                        
                         "<th>Nom</th>",
                         "<th>Prix</th>",
                         "<th>Quantité</th>",
                         "<th>Total</th>",
+                        "<th>Description</th>",
+                        "<th>Suppression</th>",
                     "</tr>",
                 "</thead>",
                "<tbody>";
@@ -40,16 +43,41 @@ if (isset($_SESSION['products']) && !empty($_SESSION['products'])){
 
         foreach($_SESSION['products'] as $index => $product){ // boucle pour afficher tout le panier, number_format pour un meilleur affichage des prix
             echo "<tr>",
-                    "<td>".$index."</td>",
+                // Numéro du produit
+                    "<td>".($index+1)."</td>",
+
+				// file
+				"<td>";
+				    if (isset($product['file'])) {
+				        echo "<img src='" . htmlspecialchars($product['file']) .
+				         "' alt='file' style='width: 50px; height: 50px;'>";
+				    } else {
+				        echo "Pas de file"; 
+				    }
+
+    			echo "</td>",                    
+
+                // Nom du produit    
                     "<td>".$product['name']."</td>",
+
+                // Prix du produit    (avec la gestion du format)
                     "<td>".number_format($product['price'], 2, ",", "&nbsp;")."&nbsp;€</td>", //la fonction number_format permet de modifier l'affichage d'une valeur numérique en présisant plusieurs paramétres
+
+                // Quantité du produit    
                     "<td>", //retirer ou ajouter une quantité
-                        "<a href='traitement.php?action=add&id=$index'>  +  </a>",
-                            $product['qtt'],
-                        "<a href='traitement.php?action=removeOne&id=$index'> -  </i>",
-                        "<a href='traitement.php?action=delete&id=$index'>  x  </i>",
+                        "<a class='btn btn-success' href='traitement.php?action=add&id=$index'>+ </a>",
+                            $product['qtt'], " ",
+                        "<a class='btn btn-danger' href='traitement.php?action=removeOne&id=$index'> -  </i>",
                     "</td>",
-                    "<td>".number_format($product['total'], 2, ",", "&nbsp;")."&nbsp;€ </td>",
+
+                // Prix total    
+                    "<td>".number_format($product['total'], 2, ",", "&nbsp;")."&nbsp;€</td>",
+                
+                // Description    
+                    "<td>".$product['description']."</td>",
+
+                //Suppression   
+                    "<td><a class='btn btn-warning' href='traitement.php?action=delete&id=$index'>  x  </i></td>",
                  "</tr>";
             $totalGeneral+= $product['total'];
         }
