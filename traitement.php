@@ -3,6 +3,7 @@
 
 //-- on appele la fonction session_start pour démarrer/récupérer une session
     session_start();
+    $id = (isset($_GET["id"])) ? $_GET["id"] : null;
 
 //-- les fonctions PHP sont dans sa documentation : https://www.php.net/manual/fr/intro.session.php
 //-- les filtres pour les nombeux cas de validation de données : https://www.php.net/manual/fr/filter.filters.php
@@ -14,20 +15,22 @@
 
 
     if (isset($_GET['action'])){ //si l'utilisateur fait une action
+
+        if (isset($_SESSION['message'])) {
+            echo "<p>{$_SESSION['message']}</p>";
+    
+            //unset DESACTIVE une variable
+            unset($_SESSION['message']); 
+        }
         
         switch ($_GET['action']){
 
             case "addProduct": //ajout de produit
                 if(isset($_POST['submit'])){
-        
-                    $name=  filter_input(INPUT_POST, "name", FILTER_SANITIZE_FULL_SPECIAL_CHARS); //nouveau filtre
-                    $price= filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                    $qtt= filter_input(INPUT_POST, "qtt", FILTER_VALIDATE_INT);
-                    $description=  filter_input(INPUT_POST, "description", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                
+
                     if (isset($_FILES['file'])) {
-                        $tmpName = $_FILES['file']['tmp_image'];
-                        $name = $_FILES['file']['image'];
+                        $tmpImage = $_FILES['file']['tmp_image'];
+                        $image = $_FILES['file']['image'];
                         $destination = __DIR__ . '/upload/' . $image;
        
                    if (move_uploaded_file($tmpImage, $destination)) {
@@ -36,10 +39,18 @@
                        echo "Échec du téléchargement.";
                        exit; 
                    }
-               }   
+        
+                    $name=  filter_input(INPUT_POST, "name", FILTER_SANITIZE_FULL_SPECIAL_CHARS); //nouveau filtre
+                    $price= filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                    $qtt= filter_input(INPUT_POST, "qtt", FILTER_VALIDATE_INT);
+                    $description=  filter_input(INPUT_POST, "description", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                
+
+                    }  
+                    
                     // Filtres pour la sécurité
             
-                    if($name && $price && $qtt && $description && isset($file)){
+                    if(isset($file) && $name && $price && $qtt && $description){
             
                         $product = [
                             "file" => $file,
