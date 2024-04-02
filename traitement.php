@@ -89,11 +89,12 @@
                     $name = $_SESSION['products'][$_GET['id']]["name"]; 
                    //$_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est diminuée</div>";
                 }
-               else {
-                   $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                   unset($_SESSION['products'][$_GET['id']]);
-                   $_SESSION['message']= "<div  class='alert alert-danger'> $name vient d'être supprimer/div>";
-               }
+                else {                
+                $name = $_SESSION['products'][$_GET['id']]["name"]; 
+                unset($_SESSION['products'][$_GET['id']]);
+
+                $_SESSION['message'] = "<div  class='alert alert-danger'>Produit $name est supprimé</div>";
+                }
                 break; 
 
             case 'add' : //action pour ajouter une quantité
