@@ -32,18 +32,8 @@
 
                         $tmpImage = $_FILES['file']['tmp_name'];
                         $image = $_FILES['file']['name'];
-                        $size = $_FILES['file']['size'];
-                        //$error = $_FILES['file']['error'];
                         $destination = __DIR__ . '/img/' . $image;
-
-                        //$tabExtension = explode('.', $image);
-                        //$extension = strtolower(end($tabExtension));
-        
-                        //$extensions = ['jpg', 'png', 'jpeg', 'gif'];
-                        //$maxSize = 400000;
-                         
-                                                
-       
+                           
                     if (move_uploaded_file($tmpImage, $destination)) {
                         $file = 'img/' . $image; 
                     }  else {
@@ -51,21 +41,10 @@
                        exit; 
                     }
 
-                    //if(in_array($tabExtension, $extensions) && $size <= $maxSize && $error == 0){
-                    //    $uniqueName = uniqid('', true);
-                    //    $file = $uniqueName.".".$extension;
-
-                    //        move_uploaded_file($tmpImage, $destination . $image);
-                    //}
-                    //else{
-                    // echo "Mauvaise extension ou taille trop grande";
-                    //}
-        
                     $name=  filter_input(INPUT_POST, "name", FILTER_SANITIZE_FULL_SPECIAL_CHARS); //nouveau filtre
                     $price= filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     $qtt= filter_input(INPUT_POST, "qtt", FILTER_VALIDATE_INT);
                     $description=  filter_input(INPUT_POST, "description", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                
 
                     }  
                     
@@ -108,13 +87,14 @@
                     $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['qtt'] * $_SESSION['products'][$_GET['id']]['price'] ;
 
                     $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                //    $_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est diminuée</div>";
+                   //$_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est diminuée</div>";
                 }
                else {
+                   $name = $_SESSION['products'][$_GET['id']]["name"]; 
                    unset($_SESSION['products'][$_GET['id']]);
-                   //$_SESSION['message']= "<div  class='alert alert-danger'Un produit vient d'être supprimer totalement du récapitulatif</div>";
+                   $_SESSION['message']= "<div  class='alert alert-danger'> $name vient d'être supprimer/div>";
                }
-                break;
+                break; 
 
             case 'add' : //action pour ajouter une quantité
                 $_SESSION['products'][$_GET['id']]['qtt'] += 1;
