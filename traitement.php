@@ -29,17 +29,18 @@
                 if(isset($_POST['submit'])){
 
                     if (isset($_FILES['file'])) {
+
                         $tmpImage = $_FILES['file']['tmp_name'];
                         $image = $_FILES['file']['name'];
                         $size = $_FILES['file']['size'];
-                        $error = $_FILES['file']['error'];
+                        //$error = $_FILES['file']['error'];
                         $destination = __DIR__ . '/img/' . $image;
 
-                        $tabExtension = explode('.', $image);
-                        $extension = strtolower(end($tabExtension));
+                        //$tabExtension = explode('.', $image);
+                        //$extension = strtolower(end($tabExtension));
         
-                        $extensions = ['jpg', 'png', 'jpeg', 'gif'];
-                        $maxSize = 400000;
+                        //$extensions = ['jpg', 'png', 'jpeg', 'gif'];
+                        //$maxSize = 400000;
                          
                                                 
        
@@ -50,15 +51,15 @@
                        exit; 
                     }
 
-                    if(in_array($tabExtension, $extensions) && $size <= $maxSize && $error == 0){
-                        $uniqueName = uniqid('', true);
-                        $file = $uniqueName.".".$extension;
+                    //if(in_array($tabExtension, $extensions) && $size <= $maxSize && $error == 0){
+                    //    $uniqueName = uniqid('', true);
+                    //    $file = $uniqueName.".".$extension;
 
-                            move_uploaded_file($tmpImage, $destination . $image);
-                    }
-                    else{
-                     echo "Mauvaise extension ou taille trop grande";
-                    }
+                    //        move_uploaded_file($tmpImage, $destination . $image);
+                    //}
+                    //else{
+                    // echo "Mauvaise extension ou taille trop grande";
+                    //}
         
                     $name=  filter_input(INPUT_POST, "name", FILTER_SANITIZE_FULL_SPECIAL_CHARS); //nouveau filtre
                     $price= filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -70,8 +71,8 @@
                     
                     // Filtres pour la sécurité
             
-                    if(isset($file) && $name && $price && $qtt && $description){
-            
+                    if($name && $price && $qtt && $description){
+
                         $product = [
                             "file" => $file,
                             "name"=> $name,
@@ -107,11 +108,11 @@
                     $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['qtt'] * $_SESSION['products'][$_GET['id']]['price'] ;
 
                     $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                    $_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est diminuée</div>";
+                //    $_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est diminuée</div>";
                 }
                else {
                    unset($_SESSION['products'][$_GET['id']]);
-                   $_SESSION['message']= "<div  class='alert alert-danger'Un produit vient d'être supprimer totalement du récapitulatif</div>";
+                   //$_SESSION['message']= "<div  class='alert alert-danger'Un produit vient d'être supprimer totalement du récapitulatif</div>";
                }
                 break;
 
@@ -121,7 +122,7 @@
                 $_SESSION['products'][$_GET['id']]['total'] = $_SESSION['products'][$_GET['id']]['qtt'] * $_SESSION['products'][$_GET['id']]['price'] ;
               
                 $name = $_SESSION['products'][$_GET['id']]["name"]; 
-                $_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est augmentée</div>";
+                //$_SESSION['message']= "<div  class='alert alert-danger'>Quantité de $name est augmentée</div>";
 
                 break;
 

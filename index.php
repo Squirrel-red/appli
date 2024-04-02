@@ -17,8 +17,7 @@
 ?>
 
     <h1 class ="text-primary">Ajouter un produit</h1>
-    <form action="traitement.php?action=addProduct" method="post"> 
-     <form action="index.php" method="post" enctype="multipart/form-data">
+    <form action="traitement.php?action=addProduct" method="post" enctype="multipart/form-data"> 
         <div class="mb-3">
 
             <label for="file">Fichier:</label>
@@ -54,8 +53,8 @@
                 <input type="submit" name="submit" value="Ajouter le produit" class="btn btn-primary btn-lg">
             </p>
 
-     </form>
     </form>
+    
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
@@ -63,13 +62,7 @@
 
 <?php
 
-if (!isset($_SESSION["message"]) || empty($_SESSION["message"])){
-    // s'il n'y a pas de messages --> on n'affiche pas les messages
-} else{
-        echo $_SESSION["message"];
 
-        unset($_SESSION["message"]);
-} 
 
 // Adaptation du ce fichier pour inclure le fichier template.php
 
