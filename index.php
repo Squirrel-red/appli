@@ -13,38 +13,12 @@
     }
 
     
-			if(isset($_FILES['file'])){
-				$tmpImage = $_FILES['file']['tmp_image'];
-				$image = $_FILES['file']['image'];
-				$size = $_FILES['file']['size'];
-				$error = $_FILES['file']['error'];
-				$destinationPath = "upload/";
-				
-				$tabExtension = explode('.', $image);
-				$extension = strtolower(end($tabExtension));
-
-				$extensions = ['jpg', 'png', 'jpeg', 'gif'];
-				$maxSize = 400000;
-
-				if(in_array($tabExtension, $extensions) && $size <= $maxSize && $error == 0){
-					   $uniqueImage = uniqid('', true);
-					   $file = $uniqueImage.".".$extension;
-
-					
-	   
-						move_uploaded_file($tmpImage, $destinationPath . $Image);
-				}
-				else{
-				    echo "Mauvaise extension ou taille trop grande";
-				}
-
-
-			}
 
 ?>
 
     <h1 class ="text-primary">Ajouter un produit</h1>
     <form action="traitement.php?action=addProduct" method="post"> 
+     <form action="index.php" method="post" enctype="multipart/form-data">
         <div class="mb-3">
 
             <label for="file">Fichier:</label>
@@ -80,6 +54,7 @@
                 <input type="submit" name="submit" value="Ajouter le produit" class="btn btn-primary btn-lg">
             </p>
 
+     </form>
     </form>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
